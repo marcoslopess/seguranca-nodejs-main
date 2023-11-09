@@ -1,7 +1,9 @@
 const { Router } = require("express");
 const ProdutoController = require("../controllers/produtoController");
-
+const autenticado = require("../../middleware/autenticado");
 const router = Router();
+
+router.use(autenticado);
 
 router
   .post("/produto", ProdutoController.cadastrarProduto)
