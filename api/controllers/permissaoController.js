@@ -16,9 +16,9 @@ class PermissaoController {
   }
 
   static async buscarTodasPermissoes(req, res) {
-    const permissaos = await permissaoService.buscarTodasPermissoes();
+    const permissoes = await permissaoService.buscarTodasPermissoes();
 
-    res.status(200).json(permissaos);
+    res.status(200).json(permissoes);
   }
 
   static async buscarPermissaoPorId(req, res) {
