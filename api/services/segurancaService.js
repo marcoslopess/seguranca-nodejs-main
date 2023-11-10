@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 
 class segurancaService {
   async cadastrarAcl(dto) {
+    console.log(dto.usuarioId);
     try {
       const usuario = await database.usuarios.findOne({
         include: [
@@ -99,6 +100,9 @@ class segurancaService {
             },
           },
         ],
+        where: {
+          id: dto.roleId,
+        },
       });
 
       if (!role) {

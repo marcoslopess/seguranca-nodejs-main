@@ -1,15 +1,16 @@
 const { Router } = require("express");
 const ProdutoController = require("../controllers/produtoController");
-const autenticado = require("../../middleware/autenticado");
+const roles = require("../middleware/roles");
+const permissoes = require("../middleware/permissoes");
+const permissoesRoles = require("../middleware/permissoesRoles");
+
 const router = Router();
 
-router.use(autenticado);
-
 router
-  .post("/produto", ProdutoController.cadastrarProduto)
-  .get("/produto", ProdutoController.buscarTodosProdutos)
-  .get("/produto/id/:id", ProdutoController.buscarProdutoPorId)
-  .delete("/produto/id/:id", ProdutoController.deletarProdutoPorId)
-  .put("/produto/id/:id", ProdutoController.editarProduto);
+  .post("/produto", permissoesRoles(["Adicionar"]), ProdutoController.cadastrarProduto)
+  .get("/produto", permissoes(["Listar"]), ProdutoController.buscarTodosProdutos)
+  .get("/produto/id/:id", permissoesRoles(["Listar"]), ProdutoController.buscarProdutoPorId)
+  .delete("/produto/id/:id", roles(["admin"]), permissoes(["Excluir"]), ProdutoController.deletarProdutoPorId)
+  .put("/produto/id/:id", permissoesRoles(["Editar"]), ProdutoController.editarProduto);
 
 module.exports = router;
